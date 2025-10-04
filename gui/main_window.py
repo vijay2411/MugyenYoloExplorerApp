@@ -430,19 +430,22 @@ class MainWindow(QMainWindow):
             self.load_yolo_model(model_info)
     
     def load_custom_model(self):
-        """Load custom YOLO model"""
+        """Load custom YOLO model with device selection"""
         file_path, _ = QFileDialog.getOpenFileName(
             self, "Select YOLO Model", "",
             "Model Files (*.pt *.onnx);;All Files (*)"
         )
         
         if file_path:
-            try:
-                self.detector = YOLODetector(model_path=file_path)
-                self.model_label.setText(f"Custom Model: {file_path.split('/')[-1]}")
-                QMessageBox.information(self, "Success", "Model loaded successfully!")
-            except Exception as e:
-                QMessageBox.critical(self, "Error", f"Failed to load model: {str(e)}")
+            # Show device selection dialog for custom model
+            from gui.model_config_dialog import ModelConfigDialog
+            dialog = ModelConfigDialog(self, custom_model_path=file_path)
+            if dialog.exec():
+                model_info = dialog.get_model_info()
+                # Update the model path to the custom file
+                model_info['path'] = file_path
+                model_info['name'] = f"Custom: {file_path.split('/')[-1]}"
+                self.load_yolo_model(model_info)
     
     def load_yolo_model(self, model_info):
         """Load YOLO model with configuration"""

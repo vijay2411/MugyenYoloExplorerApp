@@ -10,12 +10,13 @@ from PyQt6.QtCore import Qt
 class ModelConfigDialog(QDialog):
     """Dialog for configuring YOLO model"""
     
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, custom_model_path=None):
         super().__init__(parent)
         self.setWindowTitle("Configure YOLO Model")
         self.setModal(True)
         self.setMinimumWidth(400)
         
+        self.custom_model_path = custom_model_path
         self.model_info = {}
         self.init_ui()
     
@@ -26,23 +27,36 @@ class ModelConfigDialog(QDialog):
         model_group = QGroupBox("Select Model")
         model_layout = QVBoxLayout()
         
-        model_label = QLabel("YOLO Model:")
-        model_layout.addWidget(model_label)
-        
-        self.model_combo = QComboBox()
-        self.model_combo.addItems([
-            "YOLOv8 Nano (yolov8n.pt)",
-            "YOLOv8 Small (yolov8s.pt)",
-            "YOLOv8 Medium (yolov8m.pt)",
-            "YOLOv8 Large (yolov8l.pt)",
-            "YOLOv8 XLarge (yolov8x.pt)",
-            "YOLOv11 Nano (yolo11n.pt)",
-            "YOLOv11 Small (yolo11s.pt)",
-            "YOLOv11 Medium (yolo11m.pt)",
-            "YOLOv11 Large (yolo11l.pt)",
-            "YOLOv11 XLarge (yolo11x.pt)"
-        ])
-        model_layout.addWidget(self.model_combo)
+        if self.custom_model_path:
+            # Custom model mode
+            model_label = QLabel("Custom Model:")
+            model_layout.addWidget(model_label)
+            
+            custom_model_label = QLabel(f"File: {self.custom_model_path.split('/')[-1]}")
+            custom_model_label.setStyleSheet("color: #4CAF50; font-weight: bold;")
+            model_layout.addWidget(custom_model_label)
+            
+            # Hide the combo box for custom models
+            self.model_combo = None
+        else:
+            # Standard model mode
+            model_label = QLabel("YOLO Model:")
+            model_layout.addWidget(model_label)
+            
+            self.model_combo = QComboBox()
+            self.model_combo.addItems([
+                "YOLOv8 Nano (yolov8n.pt)",
+                "YOLOv8 Small (yolov8s.pt)",
+                "YOLOv8 Medium (yolov8m.pt)",
+                "YOLOv8 Large (yolov8l.pt)",
+                "YOLOv8 XLarge (yolov8x.pt)",
+                "YOLOv11 Nano (yolo11n.pt)",
+                "YOLOv11 Small (yolo11s.pt)",
+                "YOLOv11 Medium (yolo11m.pt)",
+                "YOLOv11 Large (yolo11l.pt)",
+                "YOLOv11 XLarge (yolo11x.pt)"
+            ])
+            model_layout.addWidget(self.model_combo)
         
         model_group.setLayout(model_layout)
         layout.addWidget(model_group)
@@ -93,8 +107,15 @@ class ModelConfigDialog(QDialog):
     
     def get_model_info(self):
         """Get selected model information"""
-        model_text = self.model_combo.currentText()
-        model_name = model_text.split('(')[1].split(')')[0]
+        if self.custom_model_path:
+            # Custom model mode
+            model_name = f"Custom: {self.custom_model_path.split('/')[-1]}"
+            model_path = self.custom_model_path
+        else:
+            # Standard model mode
+            model_text = self.model_combo.currentText()
+            model_name = model_text
+            model_path = model_text.split('(')[1].split(')')[0]
         
         # Determine device based on selection
         if self.cpu_radio.isChecked():
@@ -109,7 +130,7 @@ class ModelConfigDialog(QDialog):
             device = 'cpu'  # Default fallback
         
         return {
-            'name': model_text,
-            'path': model_name,
+            'name': model_name,
+            'path': model_path,
             'device': device
         }

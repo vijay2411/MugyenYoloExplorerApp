@@ -1,262 +1,289 @@
 # YOLO Explorer 🚀
 
-A comprehensive Python-based object detection application using YOLO models with a modern PyQt6 GUI interface.
+A comprehensive Python-based object detection application using YOLO models with a modern PyQt6 GUI interface. Features real-time detection, multiple input sources, responsive design, and cross-platform GPU support.
 
 ![YOLO Explorer](https://img.shields.io/badge/YOLO-Explorer-green)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![PyQt6](https://img.shields.io/badge/PyQt6-Latest-orange)
+![Platform](https://img.shields.io/badge/Platform-Cross--Platform-lightgrey)
 
-## Features ✨
+## ✨ Features
 
-### Core Features
-- **Multiple YOLO Models Support**: YOLOv8, YOLOv11 (Nano, Small, Medium, Large, XLarge)
-- **Multiple Input Sources**: 
-  - Webcam (USB/Integrated)
-  - Video Files (MP4, AVI, MOV, MKV, etc.)
-  - Static Images (JPG, PNG, BMP, etc.)
-  - RTSP Streams (IP Cameras)
-- **Real-time Detection**: Live object detection with bounding boxes and confidence scores
+### 🎯 Core Detection Features
+- **Multiple YOLO Models**: YOLOv8, YOLOv11 (Nano, Small, Medium, Large, XLarge)
 - **Task Selection**: Detection, Segmentation, Pose Estimation, Tracking
-- **Adjustable Confidence Threshold**: Fine-tune detection sensitivity
+- **Real-time Inference**: Live object detection with bounding boxes and confidence scores
+- **Adjustable Confidence**: Fine-tune detection sensitivity (0.0 - 1.0)
 - **Performance Statistics**: 
   - FPS (Frames Per Second)
   - Inference Time
   - Object Count per Class
   - Average Confidence per Class
 
-### GUI Features
+### 📹 Input Sources
+- **Webcam Support**: Multiple camera detection (USB/Integrated)
+- **Video Files**: MP4, AVI, MOV, MKV, etc.
+- **Static Images**: JPG, PNG, BMP, etc.
+- **RTSP Streams**: IP Cameras with authentication
+- **Auto Camera Detection**: Automatically finds and lists all available cameras
+
+### 🖥️ GUI Features
+- **Responsive Design**: Automatically adapts to screen size
 - **Modern Interface**: Clean, intuitive PyQt6-based GUI
 - **Live Video Feed**: Real-time video display with annotations
 - **Control Panel**: Easy-to-use controls for all settings
 - **Statistics Dashboard**: Live performance metrics
+- **System Monitor**: CPU, Memory, GPU usage monitoring
 - **Model Configuration**: Simple model selection and device configuration
-- **Progress Tracking**: Visual feedback for video processing
 
-## Installation 🛠️
+### 🔧 Advanced Features
+- **Cross-Platform GPU Support**: 
+  - CUDA (NVIDIA GPUs)
+  - MPS (Apple Silicon Macs)
+  - NPU (NVIDIA Jetson)
+- **Dynamic System Monitoring**: Real-time CPU, Memory, GPU usage
+- **Multi-Camera Support**: Detect and switch between multiple cameras
+- **Auto Model Loading**: Default YOLOv8n model preloaded on startup
+- **Auto Video Start**: Video feed starts immediately when source is selected
+
+## 🚀 Quick Start
 
 ### Prerequisites
 - Python 3.8 or higher
 - pip package manager
-- (Optional) NVIDIA GPU with CUDA support for faster inference
+- (Optional) GPU support for faster inference
 
-### Step 1: Clone or Download
+### Installation & Running
 
+**One-Command Setup:**
 ```bash
-# If using git
-git clone <repository-url>
-cd yolo-explorer
-
-# Or simply create a project directory and add the files
-mkdir yolo-explorer
-cd yolo-explorer
+bash quick_start_script.sh
 ```
 
-### Step 2: Install Dependencies
+This script will:
+- Create and activate virtual environment
+- Install all dependencies
+- Clear Python cache
+- Set up macOS environment variables
+- Launch the application
+
+### Manual Installation (Alternative)
 
 ```bash
-# Install required packages
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
-```
 
-### Step 3: Install PyTorch (GPU Support - Optional)
-
-For NVIDIA GPU support (recommended for better performance):
-
-```bash
-# CUDA 11.8
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
-
-# CUDA 12.1
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
-
-# CPU only (if no GPU)
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-```
-
-## Project Structure 📁
-
-```
-yolo-explorer/
-│
-├── main.py                 # Main application entry point
-├── requirements.txt        # Python dependencies
-├── README.md              # This file
-│
-├── gui/                   # GUI components
-│   ├── __init__.py
-│   ├── main_window.py     # Main application window
-│   ├── widgets.py         # Custom widgets (StatsWidget, etc.)
-│   ├── model_config_dialog.py  # Model configuration dialog
-│   └── rtsp_dialog.py     # RTSP stream configuration
-│
-├── core/                  # Core functionality
-│   ├── __init__.py
-│   ├── yolo_detector.py   # YOLO detection engine
-│   └── video_processor.py # Video/image processing
-│
-├── utils/                 # Utility functions
-│   ├── __init__.py
-│   └── helpers.py         # Helper functions
-│
-└── config/                # Configuration
-    ├── __init__.py
-    └── settings.py        # Application settings
-```
-
-## Usage 🎯
-
-### Running the Application
-
-```bash
+# Run application
 python main.py
 ```
 
-### Quick Start Guide
+## 📁 Project Structure
 
-1. **Load a Model**
-   - Click "Configure Model..." button
-   - Select your desired YOLO model (start with YOLOv8 Nano for quick testing)
-   - Choose CPU or GPU (CUDA)
-   - Click OK
+```
+YoloExplorer/
+│
+├── main.py                    # Main application entry point
+├── requirements.txt           # Python dependencies
+├── quick_start_script.sh     # One-command setup script
+├── quick_start_windows.txt   # Windows setup instructions
+├── installation_guide.md     # Detailed installation guide
+├── setup_script.py           # Setup automation script
+├── advanced_features.py      # Advanced features (tracking, zones, etc.)
+├── config_module.py          # Configuration module
+│
+├── core/                     # Core functionality
+│   ├── __init__.py
+│   ├── yolo_detector.py      # YOLO detection engine
+│   └── video_processor.py    # Video/image processing
+│
+├── gui/                      # GUI components
+│   ├── __init__.py
+│   ├── main_window.py        # Main application window
+│   ├── widgets.py            # Custom widgets (StatsWidget, SystemMonitor)
+│   ├── model_config_dialog.py # Model configuration dialog
+│   └── rtsp_dialog.py        # RTSP stream configuration
+│
+├── utils/                    # Utility functions
+│   ├── __init__.py
+│   └── helpers.py            # Helper functions
+│
+├── config/                   # Configuration
+│   └── __init__.py
+│
+└── YoloExplorer_venv/        # Virtual environment (created by script)
+```
 
-2. **Select Input Source**
-   - Choose source type from dropdown (Webcam, Video File, Image, RTSP)
-   - Click "Select Source..." to configure
-   - For Webcam: Default camera will be used
-   - For Video/Image: Browse and select file
-   - For RTSP: Enter stream URL
+## 🎮 Usage Guide
 
-3. **Adjust Settings**
-   - Use the Confidence slider to adjust detection threshold (0.0 - 1.0)
-   - Higher values = fewer but more confident detections
-   - Lower values = more detections but may include false positives
+### 1. **Start the Application**
+```bash
+bash quick_start_script.sh
+```
 
-4. **Start Detection**
-   - Click "Start Detection" button
-   - Watch real-time detections in the video feed
-   - Monitor statistics in the left panel
-   - Click "Stop Detection" to pause
+### 2. **Select Input Source**
+- **Webcam**: Choose from detected cameras (Camera 0, Camera 1, etc.)
+- **Video File**: Browse and select video file
+- **Image**: Select static image for detection
+- **RTSP Stream**: Enter stream URL (e.g., `rtsp://admin:password@192.168.1.64:554/stream1`)
 
-### Advanced Features
+### 3. **Configure Model (Optional)**
+- Default YOLOv8n model is preloaded
+- Click "Configure Model..." to change model or device
+- Available devices: CPU, CUDA, MPS (Mac), NPU (Jetson)
 
-#### RTSP Stream Configuration
+### 4. **Start Detection**
+- Video feed starts automatically when source is selected
+- Click "Start YOLO Detection" to begin inference
+- Adjust confidence slider for detection sensitivity
+- Monitor real-time statistics in the left panel
+
+### 5. **Monitor Performance**
+- **FPS**: Current frames per second
+- **Inference Time**: Time per detection
+- **Object Count**: Number of detected objects per class
+- **System Stats**: CPU, Memory, GPU usage
+
+## ⚙️ Configuration
+
+### Model Settings
+- **Confidence Threshold**: Minimum confidence for detections (default: 0.5)
+- **IOU Threshold**: Intersection over Union for NMS (default: 0.45)
+- **Device**: CPU, CUDA, MPS, or NPU
+
+### System Requirements
+- **Minimum**: 4GB RAM, Python 3.8+
+- **Recommended**: 8GB RAM, GPU support
+- **GPU Support**: CUDA 11.8+, MPS (Apple Silicon), NPU (Jetson)
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**1. PyQt6 Platform Plugin Error (macOS)**
+```bash
+# Solution: Use the quick_start_script.sh which sets proper environment variables
+bash quick_start_script.sh
+```
+
+**2. Camera Not Detected**
+```bash
+# Solution: Check camera permissions and refresh
+# Click "Refresh Cameras" button in the GUI
+```
+
+**3. Model Loading Issues**
+```bash
+# Solution: Ensure internet connection for first-time model download
+# Models are cached locally after first download
+```
+
+**4. Low Performance**
+```bash
+# Solutions:
+# - Use GPU if available (CUDA/MPS/NPU)
+# - Try smaller model (YOLOv8n instead of YOLOv8x)
+# - Reduce input resolution
+# - Close other applications
+```
+
+**5. CUDA Out of Memory**
+```bash
+# Solutions:
+# - Use smaller model
+# - Switch to CPU mode
+# - Reduce batch size
+```
+
+## 🎯 Advanced Features
+
+### RTSP Stream Configuration
 ```
 Format: rtsp://username:password@ip:port/stream
 Example: rtsp://admin:password@192.168.1.64:554/stream1
 ```
 
-#### Custom Model Loading
-- Click "Load Custom Model..." to load your own trained YOLO models (.pt or .onnx files)
+### GPU Support
+- **CUDA**: NVIDIA GPUs with CUDA 11.8+
+- **MPS**: Apple Silicon Macs (M1/M2/M3)
+- **NPU**: NVIDIA Jetson (Orin, Xavier, Nano)
 
-## Configuration ⚙️
+### System Monitoring
+- Real-time CPU usage
+- Memory consumption
+- GPU utilization (CUDA/MPS/NPU)
+- Process monitoring
 
-### Model Settings
-- **Confidence Threshold**: Minimum confidence for detections (default: 0.5)
-- **IOU Threshold**: Intersection over Union for NMS (default: 0.45)
-- **Device**: CPU or CUDA (GPU)
+## 📊 Model Performance
 
-### Video Settings
-- **Max FPS**: 30 (adjustable in settings.py)
-- **Max Resolution**: 1920x1080 (adjustable in settings.py)
+| Model | Size | Speed (CPU) | Speed (GPU) | mAP | Use Case |
+|-------|------|-------------|-------------|-----|----------|
+| YOLOv8n | 3.2MB | ~45ms | ~1.5ms | 37.3 | Fast, lightweight |
+| YOLOv8s | 11.2MB | ~80ms | ~2.5ms | 44.9 | Balanced |
+| YOLOv8m | 25.9MB | ~150ms | ~4ms | 50.2 | Good accuracy |
+| YOLOv8l | 43.7MB | ~230ms | ~6ms | 52.9 | High accuracy |
+| YOLOv8x | 68.2MB | ~380ms | ~9ms | 53.9 | Best accuracy |
 
-## Keyboard Shortcuts ⌨️
+## 🛠️ Development
 
-- `Ctrl+Q` - Quit application
-- `Space` - Start/Stop detection
-- `R` - Restart video
-
-## Troubleshooting 🔧
-
-### Common Issues
-
-**1. Model Download Error**
-```
-Solution: YOLO models will be automatically downloaded on first use.
-Ensure you have internet connection for first run.
-```
-
-**2. Webcam Not Detected**
-```
-Solution: Check camera permissions and ensure no other application is using it.
-Try changing camera index in source selection.
-```
-
-**3. Low FPS / Slow Performance**
-```
-Solution:
-- Use GPU if available (CUDA)
-- Try smaller model (e.g., YOLOv8 Nano instead of Large)
-- Reduce input resolution
-- Close other applications
-```
-
-**4. CUDA Out of Memory**
-```
-Solution:
-- Use smaller model
-- Reduce batch size
-- Switch to CPU mode
-```
-
-## Model Performance Comparison
-
-| Model | Size | Speed (CPU) | Speed (GPU) | mAP |
-|-------|------|-------------|-------------|-----|
-| YOLOv8n | 3.2MB | ~45ms | ~1.5ms | 37.3 |
-| YOLOv8s | 11.2MB | ~80ms | ~2.5ms | 44.9 |
-| YOLOv8m | 25.9MB | ~150ms | ~4ms | 50.2 |
-| YOLOv8l | 43.7MB | ~230ms | ~6ms | 52.9 |
-| YOLOv8x | 68.2MB | ~380ms | ~9ms | 53.9 |
-
-## Features Roadmap 🗺️
-
-- [ ] Export detection results to JSON/CSV
-- [ ] Video recording with annotations
-- [ ] Custom class filtering
-- [ ] Multi-camera support
-- [ ] Batch processing mode
-- [ ] Detection zones/ROI selection
-- [ ] Alert system for specific detections
-- [ ] Cloud model storage
-- [ ] Performance profiling
-- [ ] Dark mode theme
-
-## Dependencies 📦
-
+### Dependencies
 - **ultralytics**: YOLO implementation
 - **opencv-python**: Video/image processing
 - **PyQt6**: GUI framework
 - **numpy**: Numerical operations
 - **torch**: Deep learning framework
 - **Pillow**: Image processing
-- **psutil**: System monitoring (optional)
+- **psutil**: System monitoring
 
-## Credits 👏
+### Keyboard Shortcuts
+- `Ctrl+Q` - Quit application
+- `Space` - Start/Stop detection
+- `R` - Restart video
 
-- YOLO models by [Ultralytics](https://github.com/ultralytics/ultralytics)
-- GUI framework: PyQt6
-- Computer Vision: OpenCV
+## 📝 Changelog
 
-## License 📄
+### Version 2.0.0 (Current)
+- ✅ Responsive GUI design
+- ✅ Multi-camera detection
+- ✅ Cross-platform GPU support (CUDA/MPS/NPU)
+- ✅ Real-time system monitoring
+- ✅ Auto video start
+- ✅ Default model preloading
+- ✅ Dynamic GPU usage monitoring
+- ✅ Fixed PyQt6 warnings
+- ✅ Enhanced error handling
+
+### Version 1.0.0 (Initial)
+- ✅ Basic YOLO detection
+- ✅ Multiple input sources
+- ✅ PyQt6 GUI
+- ✅ CPU/GPU support
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
 
 This project is open source and available for educational and research purposes.
 
-## Support 💬
+## 🆘 Support
 
-For issues, questions, or contributions, please visit the project repository or contact the maintainer.
-
-## Changelog 📝
-
-### Version 1.0.0 (Initial Release)
-- Complete YOLO detection application
-- Multiple model support (YOLOv8, YOLOv11)
-- Multiple input sources (Webcam, Video, Image, RTSP)
-- Real-time statistics dashboard
-- Modern PyQt6 GUI
-- CPU and GPU support
-- Adjustable confidence threshold
-- Model configuration dialog
+For issues, questions, or contributions:
+- Check the troubleshooting section above
+- Review the installation guide
+- Ensure all dependencies are properly installed
+- Use the quick_start_script.sh for automatic setup
 
 ---
 
 **Happy Detecting! 🎉**
+
+*YOLO Explorer - Making Computer Vision Accessible*
